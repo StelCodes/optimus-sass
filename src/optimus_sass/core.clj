@@ -3,15 +3,13 @@
             [clojure.string :as str]
             [optimus.assets.creation :refer [last-modified existing-resource]]
             [optimus.assets.load-css :refer [create-css-asset]])
-  (:import [org.jruby.embed ScriptingContainer LocalContextScope]))
+  (:import io.bit3.jsass.Options
+           io.bit3.jsass.Compiler))
 
-(let [ruby (ScriptingContainer. LocalContextScope/SINGLETON)
-      sass (.runScriptlet ruby "ENV['GEM_PATH']='deps'
-                                ENV['GEM_HOME']='deps'
-                                require 'sass'
-                                Sass")]
-  (defn compile-file [^java.net.URL file]
-    (.callMethod ruby sass "compile_file" (.getPath file) String)))
+(defn compile-file [^java.net.URL file]
+  (let [compiler (Compiler.)
+        options (Options.)]
+    (.compileFile compiler file (io/as-url "/tmp/test-sass.sass") options)))
 
 (defn load-sass-asset [public-dir path]
   (let [resource (existing-resource public-dir path)]
