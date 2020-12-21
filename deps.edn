@@ -1,0 +1,19 @@
+{
+ :paths ["src"]
+ :deps {org.clojure/clojure  {:mvn/version "1.10.1"}
+        optimus/optimus  {:mvn/version "1.0.0-rc3"}
+        io.bit3/jsass {:mvn/version "5.10.4"}}
+  :description "Sass/SCSS asset loader for Optimus"
+  :url "http://github.com/DomKM/optimus-sass"
+  :license {:name "Eclipse Public License"
+            :url "http://www.eclipse.org/legal/epl-v10.html"}
+ :aliases {:uberjar {:extra-deps {seancorfield/depstar {:mvn/version "1.1.128"}}
+            ; :main-opts ["-m" "hf.depstar.uberjar" "optimus-sass.jar"
+            ;             "-C" "-m" "stelcodes.optimus-sass.core"]}  
+                      :exec-fn hf.depstar.jar/run
+                      :exec-args {:jar "stelcodes.optimus-sass.jar" :aot true :main-class stelcodes.optimus-sass.core}
+            }
+            :deploy {:extra-deps {slipset/deps-deploy {:git/url "https://github.com/slipset/deps-deploy.git" :sha "287243b7ccd11b908790925d614429383bafb78e"}}
+                     :exec-fn deps-deploy.deps-deploy/deploy
+                     :exec-args {:artifact "stelcodes.optimus-sass.jar" :installer :remote :sign-releases? false}}
+ }}

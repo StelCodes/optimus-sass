@@ -1,9 +1,10 @@
-(ns optimus-sass.core
+(ns stelcodes.optimus-sass.core
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
             [optimus.assets.creation :refer [last-modified existing-resource]]
             [optimus.assets.load-css :refer [create-css-asset]])
-  (:import [io.bit3.jsass Options]))
+  (:import [io.bit3.jsass Options])
+  (:gen-class))
 
 (defn compile-file [^java.net.URL file output]
   (let [compiler (io.bit3.jsass.Compiler.)
