@@ -1,19 +1,26 @@
-{
- :paths ["src"]
- :deps {org.clojure/clojure  {:mvn/version "1.10.1"}
-        optimus/optimus  {:mvn/version "1.0.0-rc3"}
-        io.bit3/jsass {:mvn/version "5.10.4"}}
-  :description "Sass/SCSS asset loader for Optimus"
-  :url "http://github.com/DomKM/optimus-sass"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
- :aliases {:uberjar {:extra-deps {seancorfield/depstar {:mvn/version "1.1.128"}}
-            ; :main-opts ["-m" "hf.depstar.uberjar" "optimus-sass.jar"
-            ;             "-C" "-m" "stelcodes.optimus-sass.core"]}  
-                      :exec-fn hf.depstar.jar/run
-                      :exec-args {:jar "stelcodes.optimus-sass.jar" :aot true :main-class stelcodes.optimus-sass.core}
-            }
-            :deploy {:extra-deps {slipset/deps-deploy {:git/url "https://github.com/slipset/deps-deploy.git" :sha "287243b7ccd11b908790925d614429383bafb78e"}}
-                     :exec-fn deps-deploy.deps-deploy/deploy
-                     :exec-args {:artifact "stelcodes.optimus-sass.jar" :installer :remote :sign-releases? false}}
- }}
+{:aliases
+   {:deploy {:exec-args {:artifact "stelcodes.optimus-sass.jar",
+                         :installer :remote,
+                         :sign-releases? true},
+             :exec-fn deps-deploy.deps-deploy/deploy,
+             :extra-deps {slipset/deps-deploy {:mvn/version "0.1.5"}}},
+    :repl {:extra-deps {cider/cider-nrepl {:mvn/version "0.25.2"},
+                        nrepl/nrepl {:mvn/version "0.8.3"}},
+           :extra-paths ["dev"],
+           :main-opts ["-m" "nrepl.cmdline" "--middleware"
+                       "[cider.nrepl/cider-middleware]" "--interactive"]},
+    :uberjar {:exec-args {:artifact-id "optimus-sass",
+                          :group-id "stelcodes",
+                          :jar "stelcodes.optimus-sass.jar",
+                          :sync-pom true,
+                          :version "0.1.3"},
+              :exec-fn hf.depstar/jar,
+              :extra-deps {seancorfield/depstar {:mvn/version "2.0.216"}}}},
+ :deps {io.bit3/jsass {:mvn/version "5.10.4"},
+        optimus/optimus {:mvn/version "1.0.0-rc3"},
+        org.clojure/clojure {:mvn/version "1.10.1"}},
+ :description "Sass/SCSS asset loader for Optimus",
+ :license {:name "Eclipse Public License",
+           :url "http://www.eclipse.org/legal/epl-v10.html"},
+ :paths ["src"],
+ :url "http://github.com/DomKM/optimus-sass"}
